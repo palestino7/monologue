@@ -2,7 +2,7 @@ import '@fontsource-variable/instrument-sans';
 import './styles.css';
 
 const DOWNLOAD_URL = import.meta.env.VITE_DOWNLOAD_URL
-  || 'https://github.com/palestino7/monologue/releases/download/v1.0.0/Monologue-Setup-1.0.0-x64.exe';
+  || 'https://github.com/omateusvini/monologue/releases/download/v1.0.0/Monologue-Setup-1.0.0-x64.exe';
 const VIRUSTOTAL_URL = import.meta.env.VITE_VIRUSTOTAL_URL
   || 'https://www.virustotal.com/gui/file/04bd4487b63f60d7a7b5d7b76d069e39ce84a3f29f35ce49e852220711371fe3';
 
