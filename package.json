@@ -1,15 +1,26 @@
 {
   "name": "monologue",
+  "productName": "Monologue",
+  "description": "Um espaço local e privado para colocar seus pensamentos em forma de conversa.",
+  "author": "Paceroot",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite",
+    "dev:site": "vite --config site/vite.config.js",
     "build": "tsc -b && vite build",
+    "build:site": "vite build --config site/vite.config.js",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:site": "vite preview --config site/vite.config.js",
+    "desktop": "electron electron/main.cjs",
+    "package:msix": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-msix.ps1",
+    "package:exe": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-exe.ps1"
   },
   "dependencies": {
+    "@fontsource-variable/instrument-sans": "^5.3.0",
     "dexie": "^4.4.4",
     "dexie-react-hooks": "^4.4.0",
     "emoji-picker-react": "^4.19.1",
@@ -23,9 +34,58 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3",
     "oxlint": "^1.75.0",
+    "sharp": "^0.35.3",
     "typescript": "~6.0.2",
     "vite": "^8.2.0",
     "vite-plugin-pwa": "^1.3.0"
+  },
+  "build": {
+    "appId": "paceroot.monologue",
+    "productName": "Monologue",
+    "copyright": "Copyright © 2026 Paceroot",
+    "asar": true,
+    "directories": {
+      "output": "build/windows/exe-output"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "build/windows/installer-assets/app-icon.png",
+        "to": "assets/app-icon.png"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/windows/installer-assets/app-icon.ico",
+      "executableName": "Monologue",
+      "artifactName": "Monologue-Setup-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Monologue",
+      "uninstallDisplayName": "Monologue",
+      "multiLanguageInstaller": true,
+      "installerLanguages": ["en_US", "pt_BR"],
+      "displayLanguageSelector": false
+    }
   }
 }
